@@ -14,7 +14,6 @@ class Database {
             echo $sql . "<br/>" . $e->getMessage();
 			return null;
         }
-        
     }
 }
 

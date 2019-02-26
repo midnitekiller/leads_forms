@@ -2,14 +2,14 @@
 /**
  * Developed By: Ranz Daren Castillano
  */
+
 class Leads extends Database{
     	
 	function addLeads($data) {
         extract($data);
         $created = date('Y-m-d H:i:s');
         $dbconn = $this->dbConn();
-        $stmt = $dbconn->prepare("INSERT INTO leads (leads_ID, leads_lname, leads_fname, leads_position, leads_hname, leads_cnumber, leads_eadd, leads_dreg)VALUES(:leads_ID, :leads_lname, :leads_fname, :leads_position, :leads_hname, :leads_cnumber, :leads_eadd, :leads_dreg);");
-        $stmt->bindParam(':leads_ID',$data['leads_ID']);
+        $stmt = $dbconn->prepare("INSERT INTO leads (leads_lname, leads_fname, leads_position, leads_hname, leads_cnumber, leads_eadd, leads_dreg)VALUES(:leads_ID, :leads_lname, :leads_fname, :leads_position, :leads_hname, :leads_cnumber, :leads_eadd, :leads_dreg);");
         $stmt->bindParam(':leads_lname',$data['leads_lname']);
         $stmt->bindParam(':leads_fname',$data['leads_fname']);
         $stmt->bindParam(':leads_position',$data['leads_position']);
