@@ -2,35 +2,15 @@
 <html>
 <body>
 
-<?php
-
-        session_start();
-        $servername = "localhost";
-        $username = "root";
-        $password = "qwe!@#123";
-        $dbname = "leadsDB";
-        
-        // Create connection
-        $conn = mysqli_connect($servername, $username, $password, $dbname);
-        // Check connection
-        if (!$conn) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-        
-        $sql = "SELECT id, firstname, lastname FROM MyGuests";
-        $result = mysqli_query($conn, $sql);
-        $leads = $result->fetch_assoc();
-
-
-
 
  <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title-table">
                 <label>LEADS LISTS</label>
-                <a class="buttonsp" id="addleads" name="action" value="" type="submit"><i class="fa fa-plus"></i> Add New Leads</a>
-                <a class="buttonsp" id="addsales" name="action" value="" type="submit"><i class="fa fa-plus"></i> Add New Sales</a>
+		<link rel="stylesheet" type="text/css" href="assets/main.css" media="all">
+		<a class="buttonsp" onclick="window.location.href = 'leads/leads.html';">Add Leads</a>
+		<a class="buttonsp" onclick="window.location.href = 'sales/sales.html';">Add Sales</a>
             </div>
             <div class="ibox-content"> 
                 <table id="#LeadsListTable" class="table table-bordered dynamicDataTables">
@@ -63,28 +43,18 @@
         </div>
     </div>
 </div>
-<button id="btnaddsales" class="material-button material-button-toggle" title="Add Sales"><span class="fa fa-plus" aria-hidden="true"></span></button>
+
+<script type="text/javascript"  src="assets/main.js"></script>
+<?php include'script-foot.php' ?>
 <script>
-
- $(document).ready(function(){
-    $('#addleads').on('click',function(){
-        window.location.href='addrooms.php';
-    });
-    $('#btnaddsa;es').on('click',function(){
-        window.location.href='addrooms.php';
-    });
- });
-
-
 $(function () {
-    $("#RoomsListTable").DataTable({
+    $("#LeadsListTable").DataTable({
         "iDisplayLength": 15,
         "order": [[ 0,"desc"]]
     });
 });
 </script>
 
-?> 
 
 </body>
 </html>
