@@ -1,8 +1,42 @@
+ <?php
+include 'script-foot.php';
+
+$servername = "localhost";
+$username = "root";
+$password = "qwe!@#123";
+$dbname = "leadsDB";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+} 
+
+$sql = "SELECT * from leads";
+$result = $conn->query($sql);
+
+
+if ($result->num_rows >0) {
+
+ while($row[] = $result->fetch_assoc()) {
+
+// $tem = $row;
+
+// $json = json_encode($tem,  JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+echo "<tr><td>".$row["leads_ID"]."</td><td>".$row["leads_fname"]." ".$row["leads_lname"]."</td><td>".$row["leads_position"]."</td><td>".$row["leads_hname"]."</td><td>".$row["leads_cnumber"]."</td><td>".$row["leads_eadd"]."</td><td>".$row["leads_dreg"]."</td></tr>";
+ }
+ echo "</table>";
+} else {
+ echo "No Results Found.";
+}
+
+$conn->close();
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <body>
-
-
  <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
@@ -26,15 +60,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($leads as $values => $leads_lists): ?>
+                        <?php foreach ($row as $values => $leads_lists): ?>
                         <tr class="lists-item">
-                            <td class="text-center"><?php echo $leads_lists['hotel_name'];?></td>
-                            <td class="text-center"><?php echo $leads_lists['last_name'];?></td>
-                            <td class="text-center"><?php echo $leads_lists['first_name'];?></td>
-                            <td class="text-center"><?php echo $leads_lists['position'];?></td>
-                            <td class="text-center"><?php echo $leads_lists['contact_number'];?></td>
-                            <td class="text-center"><?php echo $leads_lists['email_add'];?></td>
-                            <td class="text-center"><?php echo $leads_lists['sales_assigned'];?></td>
+                            <td class="text-center"><?php echo $leads_lists['leads_hname'];?></td>
+                            <td class="text-center"><?php echo $leads_lists['leads_lname'];?></td>
+                            <td class="text-center"><?php echo $leads_lists['leads_fname'];?></td>
+                            <td class="text-center"><?php echo $leads_lists['leads_position'];?></td>
+                            <td class="text-center"><?php echo $leads_lists['leads_cnumber'];?></td>
+                            <td class="text-center"><?php echo $leads_lists['leads_eadd'];?></td>
+			    <td class="text-center"><?php echo $leads_lists['leads_dreg'];?></td>
                         </tr>
                         <?php endforeach ?>
                     </tbody>
@@ -45,6 +79,7 @@
 </div>
 
 <script type="text/javascript"  src="assets/main.js"></script>
+
 <?php include'script-foot.php' ?>
 <script>
 $(function () {
@@ -58,3 +93,4 @@ $(function () {
 
 </body>
 </html>
+
