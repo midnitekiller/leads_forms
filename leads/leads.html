@@ -1,3 +1,21 @@
+		<?php
+		
+			$servername = "localhost";
+			$username = "root";
+			$password = "qwe!@#123";
+			$dbname = "leadsDB";
+
+			$conn = new mysqli($servername, $username, $password, $dbname);
+			if ($conn->connect_error) {
+			    die("Connection failed: " . $conn->connect_error);
+			}
+
+			$sqlsales = "SELECT * from sales";
+			$result = $conn->query($sql);
+			$sales = $result->fetch_assoc();
+		?>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -21,43 +39,45 @@
 			<ul >
 			
 					<li id="li_1" >
-		<label class="description" for="element_1">Last Name: </label>
+		<label class="description" for="leads_lname">Last Name: </label>
 		<div>
-			<input id="element_1" name="element_1" class="element text medium" type="text" maxlength="255" value=""/> 
+			<input id="leads_lname" name="leads_lname" class="element text medium" type="text" maxlength="255" value=""/> 
 		</div> 
 		</li>		<li id="li_2" >
-		<label class="description" for="element_2">First Name: </label>
+		<label class="description" for="leads_fname">First Name: </label>
 		<div>
-			<input id="element_2" name="element_2" class="element text medium" type="text" maxlength="255" value=""/> 
+			<input id="leads_fname" name="leads_fname" class="element text medium" type="text" maxlength="255" value=""/> 
 		</div> 
 		</li>		<li id="li_3" >
-		<label class="description" for="element_3">Position: </label>
+		<label class="description" for="leads_position">Position: </label>
 		<div>
-			<input id="element_3" name="element_3" class="element text medium" type="text" maxlength="255" value=""/> 
+			<input id="leads_position" name="leads_position" class="element text medium" type="text" maxlength="255" value=""/> 
 		</div> 
 		</li>		<li id="li_4" >
-		<label class="description" for="element_4">Hotel Name: </label>
+		<label class="description" for="leads_hname">Hotel Name: </label>
 		<div>
-			<input id="element_4" name="element_4" class="element text medium" type="text" maxlength="255" value=""/> 
+			<input id="leads_hname" name="leads_hname" class="element text medium" type="text" maxlength="255" value=""/> 
 		</div> 
 		</li>		<li id="li_5" >
-		<label class="description" for="element_5">Contact Number </label>
+		<label class="description" for="leads_cname">Contact Number </label>
 		<div>
-			<input id="element_5" name="element_5" class="element text medium" type="text" maxlength="255" value=""/> 
+			<input id="leads_cname" name="leads_cname" class="element text medium" type="text" maxlength="255" value=""/> 
 		</div> 
 		</li>		<li id="li_6" >
-		<label class="description" for="element_6">Email Address: </label>
+		<label class="description" for="leads_eadd">Email Address: </label>
 		<div>
-			<input id="element_6" name="element_6" class="element text medium" type="text" maxlength="255" value=""/> 
+			<input id="leads_eadd" name="leads_eadd" class="element text medium" type="text" maxlength="255" value=""/> 
 		</div> 
 		</li>		<li id="li_7" >
 		<label class="description" for="element_7">Sales Assigned: </label>
 		<div>
-		<select class="element select medium" id="element_7" name="element_7"> 
-			<option value="" selected="selected"></option>
-<option value="1" >First option</option>
-<option value="2" >Second option</option>
-<option value="3" >Third option</option>
+		<select class="element select medium" id="sales_ID" name="sales_ID"> 
+			<?php foreach ($sales as $values => $sales_lists): ?>
+			<option value="<?php echo $leads_lists['sales_ID'];?>"</option>
+			<option value="<?php echo $leads_lists['sales_lname'];?><?php $leads_lists['sales_fname'];?>"</option>
+			<?php endforeach ?>
+		</select>
+		<select class="form-dropdown" style="width:150px" id="input_5" name="q5_listOf">
 
 		</select>
 		</div> 
@@ -75,3 +95,62 @@
 	<img id="bottom" src="bottom.png" alt="">
 	</body>
 </html>
+<script>
+$(document).ready(function(){
+    $('#cancelLeads').on('click',function(){
+        window.location.href='leads.php';
+    });
+});
+
+function clearData(){
+    document.getElementById("leads_name").value= "";
+    document.getElementById("leads_position").value= "";
+    document.getElementById("leads_hname").value = "";
+     document.getElementById("leads_cnumber").value= "";
+    document.getElementById("leads_eadd").value= "";
+    document.getElementById("sales_ID").value = "";
+}
+    
+$(function () {
+    $("#loadthis").addClass('loader-show');
+    jQuery.validator.addMethod("greaterThan", 
+    function(value, element, params) {
+        if (!/Invalid|NaN/.test(new Date(value))) {
+            return new Date(value) >= new Date($(params).val());
+        }
+        return isNaN(value) && isNaN($(params).val()) 
+            || (Number(value) > Number($(params).val())); 
+    },'Must be greater than {0}.');
+
+    $("#create_room_form").validate({
+        rules: {
+            room_no: "required",
+            room_type: "required",
+            room_price: "required"
+        },           
+        submitHandler: function(form) {
+            $("#loadthis").addClass('loader-show');
+            var datafields = [];
+            var room_id = $("#room_no").children(":selected").attr("id");
+            datafields = $("form").serializeArray();
+            $.ajax({
+                type:"POST",
+                url:"controller/RoomsController.php",
+                data: datafields,
+                success: function(data) {
+                    if(data == "true") {
+                        $('#mssg').html("<div class='alert-success-row'><span class='alert-label alert-label-left alert-success-cell'><i class='glyphicon glyphicon-ok'></i></span><p class='alert-body alert-body-right alert-labelled-cell'>Successfully Added Rooms!</p></div>");
+                        setTimeout(function(){ $('#mssg').html(""); }, 4000);
+                        $("#room_no").load(location.href + " #room_no>*", "");
+                        clearData();
+                    }else {
+                        $('#mssg').html("<div class='alert-danger-row'><span class='alert-label alert-label-left alert-danger-cell'><i class='glyphicon glyphicon-alert'></i></span><p class='alert-body alert-body-right alert-labelled-cell'>Unable to Add Rooms. Please try again!</p></div>");
+                        setTimeout(function(){ $('#mssg').html(""); }, 4000);
+                    }
+                    $("#loadthis").removeClass('loader-show');
+                 }
+            });
+        }
+    })
+}); 
+</script>

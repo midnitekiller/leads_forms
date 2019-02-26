@@ -1,0 +1,49 @@
+
+.buttonsp{
+    display: inline-block;
+    padding: 8px;
+    border: 3px solid rgb(26, 179, 156);
+    border-radius: 6px;
+    box-shadow:
+        0 2px 1px rgba(0, 0, 0, 0.2), 
+        inset 0 2px 1px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #222;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    float:right;
+    margin-right:3px;
+
+}
+
+
+
+.ibox-content , .header,.myBreadcrumb {
+    -webkit-animation: fadeInScale 0.7s ease-in-out;
+    -moz-animation: fadeInScale 0.7s ease-in-out;
+    animation: fadeInScale 0.7s ease-in-out;  
+}
+
+.ibox-title-table {
+    background-color: #ffffff;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 4px 0px 0;
+    color: inherit;
+    margin-bottom: 0;
+    padding: 15px 20px 20px 20px;
+    min-height: 60px;
+}
+.ibox-title-table label{
+    margin-top:15px;
+}
+table .text-center{
+    color:rgba(68, 68, 68, 0.91);
+    font-size:14px;
+    font-weight: 600;
+}
+.container{
+    margin-top:20px;
+}

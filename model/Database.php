@@ -1,5 +1,4 @@
 <?php 
-
 class Database {
     function dbConn(){
         $dbhost = "localhost";
